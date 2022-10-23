@@ -1,6 +1,11 @@
 pipeline {
       agent any 
       stages {
+          stage('Run tests') {
+              steps {
+                  sh 'python -m unittest discover -s tests -v'
+              }
+          }
           stage('Print + list current directory') {
               steps {
                   sh 'pwd'
@@ -17,8 +22,8 @@ pipeline {
                   sh '''
                   roslaunch publisher_example move.launch &
                   MOVE_ID=$!
-                  sleep 30s
-                  kill $MOVE_ID
+                    sleep 30s
+                    kill $MOVE_ID
                   '''
               }
           }
@@ -27,8 +32,8 @@ pipeline {
                   sh '''
                   roslaunch publisher_example stop.launch &
                   STOP_ID=$!
-                  sleep 5s
-                  kill $STOP_ID
+                    sleep 5s
+                    kill $STOP_ID
                   '''
               }
           }
@@ -45,3 +50,4 @@ pipeline {
           }
       }
   }
+  
